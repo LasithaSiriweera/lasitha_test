@@ -1,15 +1,53 @@
 import React from "react";
-import { StyleSheet, View, Text} from 'react-native';
+import { StyleSheet, View, Text, TextInput, Button } from 'react-native';
 
 
 export default class SignIn extends React.Component {
 
+    constructor(Props) {
+        super(Props);
+        this.state = {
+            email: '',
+            password: ''
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>
-                <Text>
-                    SignIn
-                </Text>
+                <View style={styles.form}>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.emailLabel}>
+                            Email
+                    </Text>
+                        <TextInput
+                            style={styles.emailInput}
+                            placeholder="Email"
+                            autoCapitalize="none"
+                            onChangeText={(text) => this.setState({ email: text })}
+                            value={this.state.email}
+                        />
+                    </View>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.passwordLabel}>
+                            Password
+                    </Text>
+                        <TextInput
+                            secureTextEntry
+                            placeholder="Password"
+                            style={styles.passwordInput}
+                            autoCapitalize="none"
+                            onChangeText={(text) => this.setState({ password: text })}
+                            value={this.state.password}
+                        />
+                    </View>
+                    
+                    <View  style={styles.btnSignIn}>
+                    <Button
+                        title="Sign in"
+                    />
+                    </View>
+                </View>
             </View>
         )
     }
@@ -17,9 +55,48 @@ export default class SignIn extends React.Component {
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    form: {
+        width: '90%',
+        borderWidth: 2
+    },
+    textContainer: {
+        flexDirection: 'row',
+        width: '100%',
+        marginBottom: 10,
+        marginTop: 10
+    },
+    emailInput: {
+        marginLeft: 40,
+        borderWidth: 2,
+        width: '60%'
+    },
+    emailLabel: {
+        textAlign: 'left',
+        width: '20%',
+        marginLeft: 20
+    },
+    passwordInput: {
+        marginLeft: 40,
+        borderWidth: 2,
+        width: '60%'
+    },
+    passwordLabel: {
+        textAlign: 'left',
+        width: '20%',
+        marginLeft: 20
+    },
+    btnSignIn:{
+        alignSelf: 'flex-end',
+        width: 150,
+        marginTop: 10,
+        marginBottom: 10,
+        marginRight: 10,
+        borderWidth: 2
+    }
+
 });
