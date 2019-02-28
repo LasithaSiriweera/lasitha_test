@@ -8,8 +8,61 @@ export default class SignIn extends React.Component {
         super(Props);
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            emailError: null,
+            passwordError: null
         }
+    }
+
+    /**
+     * Validate email 
+     */
+    isEmailValidated() {
+        if (this.state.email === null || this.state.email.trim() === '') {
+            this.setState({
+                emailError: 'Email is empty',
+            })
+            return false
+        } else {
+            let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            if (reg.test(this.state.email) === false) {
+                this.setState({
+                    emailError: 'Email is not a valid one',
+                })
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+
+    /**
+     * Check password is validated
+     */
+    isPasswordValidated() {
+        if (this.state.password === null || this.state.password.trim() === '') {
+            this.setState({
+                passwordError: 'Password is empty',
+            })
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+    /**
+     * login function
+     */
+    login() {
+        this.setState({
+            emailError: null,
+            passwordError: null,
+        })
+        if (this.isEmailValidated() && this.isPasswordValidated()) {
+            alert('Login Success');
+        }
+
     }
 
     render() {
@@ -28,6 +81,10 @@ export default class SignIn extends React.Component {
                             value={this.state.email}
                         />
                     </View>
+
+                    {
+                        this.state.emailError? <Text style={styles.errorText}>{this.state.emailError}</Text>  : null
+                    }
                     <View style={styles.textContainer}>
                         <Text style={styles.passwordLabel}>
                             Password
@@ -41,11 +98,15 @@ export default class SignIn extends React.Component {
                             value={this.state.password}
                         />
                     </View>
-                    
-                    <View  style={styles.btnSignIn}>
-                    <Button
-                        title="Sign in"
-                    />
+
+                    {
+                        this.state.passwordError? <Text style={styles.errorText}>{this.state.passwordError}</Text>  : null
+                    }
+                    <View style={styles.btnSignIn}>
+                        <Button
+                            title="Sign in"
+                            onPress={() => { this.login() }}
+                        />
                     </View>
                 </View>
             </View>
@@ -90,13 +151,17 @@ const styles = StyleSheet.create({
         width: '20%',
         marginLeft: 20
     },
-    btnSignIn:{
+    btnSignIn: {
         alignSelf: 'flex-end',
         width: 150,
         marginTop: 10,
         marginBottom: 10,
         marginRight: 10,
         borderWidth: 2
+    },
+    errorText:{
+        alignSelf:'center',
+        color: 'red'
     }
 
 });
